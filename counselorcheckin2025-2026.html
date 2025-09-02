@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUHSD Contact Your Counselor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(145deg, #f8f9ff, #e8ebff);
+            border-radius: 15px;
+            box-shadow: inset 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-label i {
+            margin-right: 8px;
+            color: #667eea;
+        }
+
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fff;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .dropdown:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dropdown:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-card {
+            background: linear-gradient(145deg, #f8f9ff, #e8ebff);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card p {
+            color: #5a6c7d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-elements::before {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-elements::after {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements"></div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="C:\eKadence\HTML\AUSHD.png" alt="AUHSD Logo" class="logo" id="logo">
+        </div>
+        
+        <h1>Contact Your Counselor</h1>
+        <p class="subtitle">Connect with your school counselor quickly and easily</p>
+
+        <form id="counselorForm">
+            <div class="form-group">
+                <label for="school" class="form-label">
+                    <i class="fas fa-school"></i>
+                    Select Your School
+                </label>
+                <div class="dropdown-container">
+                    <select id="school" name="school" class="dropdown" required>
+                        <option value="">Choose your school...</option>
+                        <option value="anaheim">Anaheim High School</option>
+                        <option value="ball">Ball Junior High School</option>
+                        <option value="brookhurst">Brookhurst Junior High School</option>
+                        <option value="cva">Cambridge Virtual Academy</option>
+                        <option value="cypress">Cypress High School</option>
+                        <option value="dale">Dale Junior High School</option>
+                        <option value="gilbert">Gilbert High School</option>
+                        <option value="katella">Katella High School</option>
+                        <option value="kennedy">Kennedy High School</option>
+                        <option value="lexington">Lexington Junior High School</option>
+                        <option value="loara">Loara High School</option>
+                        <option value="magnolia">Magnolia High School</option>
+                        <option value="oxford">Oxford Academy</option>
+                        <option value="savanna">Savanna High School</option>
+                        <option value="south">South Junior High School</option>
+                        <option value="sycamore">Sycamore Junior High School</option>
+                        <option value="walker">Walker Junior High School</option>
+                        <option value="western">Western High School/Orangeview Junior High School</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="counselor" class="form-label">
+                    <i class="fas fa-user-tie"></i>
+                    Select Your Counselor
+                </label>
+                <div class="dropdown-container">
+                    <select id="counselor" name="counselor" class="dropdown" required disabled>
+                        <option value="">First select your school...</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i>
+                Contact Counselor
+            </button>
+        </form>
+
+        <div class="info-card">
+            <p><i class="fas fa-info-circle" style="color: #667eea; margin-right: 8px;"></i>
+            Your counselor is here to help with academic planning, college preparation, and personal support. Please allow 24-48 hours for a response during school days.</p>
+        </div>
+    </div>
+
+    <script>
+        // Counselor data for each school (based on actual AUHSD data)
+        const counselorData = {
+            "anaheim": [
+                { value: "ambriz_m", name: "Ms. Amalia Ambriz", email: "ambriz_m@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfybDj4AXR8RhMRzQW77mL-0EhhsR0hF2mQz8aFIL9eSiHw2g/closedform" },
+                { value: "ambriz_a", name: "Ms. Aurora Ambriz", email: "ambriz_a@auhsd.us", form: "https://docs.google.com/forms/d/1qMrhx8As1SEc4rw_NcxDRuY6a-o2QLHrAlton6Vj_1E/edit?usp=sharing" },
+                { value: "cuellar_a", name: "Ms. Amie Cuellar", email: "cuellar_a@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfwwJquRzVRcsxD9SrmnRBfp8LabnN8_zrUSK1i2KJUjJB1IQ/closedform" },
+                { value: "nishimura_mi", name: "Ms. Minh-Chau Nishimura", email: "nishimura_mi@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSc90IfnqcnnlBh9hmx5eUIKXy3dpPtYNhQ3XT31Jaj6vPUzZg" },
+                { value: "ramirez_sa", name: "Ms. Sabrina Ramirez", email: "ramirez_sa@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSc8GYd4r8FwlwzlITFHZm58kxKu6HalpsyRhE5MlTkiI7C--g/viewform?usp=sf_link" },
+                { value: "velasco_d", name: "Ms. Daysy Velasco", email: "velasco_d@auhsd.us", form: "https://docs.google.com/forms/d/1NFP8Ao3hz62r6_7Sj6XcFIZ2AdRurXMJ-R7DOYO4GQM/edit" },
+                { value: "orozco_cat", name: "Ms. Catalina Orozco (Dual Enrollment)", email: "orozco_cat@auhsd.us", form: "" },
+                { value: "casas_j", name: "Mr. Joe Casas (ILC)", email: "casas_j@auhsd.us", form: "" }
+            ],
+            "ball": [
+                { value: "durkin_m", name: "Ms. MJ Durkin", email: "durkin_m@auhsd.us", form: "https://forms.gle/ZYtGENzMRJTSJiux7" },
+                { value: "torres_o", name: "Ms. Olga Torres", email: "torres_o@auhsd.us", form: "https://docs.google.com/forms/d/1Rnhp-lEMvJ68QUzSb0L1eWRslmTxcSKXfvnPCSyH0vE/edit" }
+            ],
+            "brookhurst": [
+                { value: "pineda_r", name: "Ms. Rosalinda Pineda", email: "pineda_r@auhsd.us", form: "https://docs.google.com/forms/d/12EPllvSHtMmPWhphiaG-HeGc313Y_HAtTszZ1x7pDHU/edit" },
+                { value: "roberts_d", name: "Ms. Diane Roberts", email: "roberts_d@auhsd.us", form: "https://docs.google.com/forms/d/12EPllvSHtMmPWhphiaG-HeGc313Y_HAtTszZ1x7pDHU/edit" }
+            ],
+            "cva": [
+                { value: "genovese_a", name: "Ms. Andrea Genovese (Dual Enrollment)", email: "genovese_a@auhsd.us", form: "" },
+                { value: "saldivar_n", name: "Ms. Natalie Saldivar", email: "saldivar_n@auhsd.us", form: "" }
+            ],
+            "cypress": [
+                { value: "an_l", name: "Ms. Lahee An", email: "an_l@auhsd.us", form: "https://docs.google.com/forms/d/1x_ehVdRsrhG9kPav_d1l2lgckeFDCJygsPQ63LxV0H4/preview" },
+                { value: "binford_m", name: "Ms. Mary Binford", email: "binford_m@auhsd.us", form: "https://forms.gle/gasFQ8irym8HUnbM6" },
+                { value: "esparza_g", name: "Ms. Gabriela Esparza", email: "esparza_g@auhsd.us", form: "https://forms.gle/pn6bkbAmqKL7kPzE7" },
+                { value: "lavrov_b", name: "Ms. Billie Lavrov", email: "lavrov_b@auhsd.us", form: "https://forms.gle/5Z72YVxygjYNKoKw6" },
+                { value: "vaughn_c", name: "Ms. Carrie Vaughn", email: "vaughn_c@auhsd.us", form: "https://forms.gle/X1GQcGyh3G2EoTkF6" },
+                { value: "wunder_a", name: "Ms. Ayla Wunder", email: "wunder_a@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfSK2v-_FaHoffwe62hkLfWJBiMTqCyX_p43M3L3b_GTi8VUw/viewform" },
+                { value: "mendez_an", name: "Ms. Ana Mendez (Dual Enrollment)", email: "mendez_an@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSf5NeNbWzR86qENsnrYHNJc453c9PeUkyhq_4H129OZaO88gg/viewform?usp=preview" },
+                { value: "lu_am", name: "Ms. Amanda Lu (ILC)", email: "lu_am@auhsd.us", form: "" }
+            ],
+            "dale": [
+                { value: "dortch_a", name: "Ms. Alexandra Dortch", email: "dortch_a@auhsd.us", form: "https://forms.gle/XckvunLkdTqY7w5b6" },
+                { value: "gaston_a", name: "Ms. Anita Gaston", email: "gaston_a@auhsd.us", form: "https://forms.gle/XckvunLkdTqY7w5b6" }
+            ],
+            "gilbert": [
+                { value: "briquelet_j", name: "Ms. Jill Briquelet", email: "briquelet_j@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSdSm610blowF07yRtsNP-kvYZZ-f9TKZNTfm-TOgQR_Bd8NaA/viewform" },
+                { value: "hurtado_o", name: "Mr. Osvaldo Hurtado", email: "hurtado_o@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSdpxQAu7ho4mBNhmNlHC8uqbMkfd0Skyt4oOMZQILjEgzwJyw/viewform" },
+                { value: "sandovalrodriguez_k", name: "Ms. Kenia Sandoval-Rodriguez", email: "sandovalrodriguez_k@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSf2tgbd1HyhRiSEcbDVqVDp9pcYdRG9VTXQRq3GCdDGmePK_g/viewform" },
+                { value: "serkez_a", name: "Ms. Amber Serkez (Dual Enrollment)", email: "serkez_a@auhsd.us", form: "" }
+            ],
+            "katella": [
+                { value: "gompert_k", name: "Mr. Kenneth Gompert", email: "gompert_k@auhsd.us", form: "" },
+                { value: "hancock_a", name: "Ms. Aprilmarie Hancock", email: "hancock_a@auhsd.us", form: "" },
+                { value: "low_j", name: "Ms. Janet Low", email: "low_j@auhsd.us", form: "" },
+                { value: "pena_k", name: "Ms. Karen Pena", email: "pena_k@auhsd.us", form: "" },
+                { value: "rodriguez_cla", name: "Ms. Clarissa Rodriguez", email: "rodriguez_cla@auhsd.us", form: "" },
+                { value: "widger_a", name: "Ms. Annel Widger", email: "widger_a@auhsd.us", form: "" },
+                { value: "serkez_a_dual", name: "Ms. Amber Serkez (Dual Enrollment)", email: "serkez_a@auhsd.us", form: "" },
+                { value: "grothe_e", name: "Ms. Elizabeth Grothe (ILC)", email: "Grothe_E@auhsd.us", form: "" }
+            ],
+            "kennedy": [
+                { value: "chan_h", name: "Ms. Helen Chan", email: "chan_h@auhsd.us", form: "" },
+                { value: "hara_g", name: "Mr. Gary Hara", email: "hara_g@auhsd.us", form: "" },
+                { value: "hernandez_v", name: "Ms. Veronica Perez-Hernandez", email: "hernandez_v@auhsd.us", form: "" },
+                { value: "robles_c", name: "Ms. Cindy Robles", email: "robles_c@auhsd.us", form: "" },
+                { value: "yun_ly", name: "Ms. Lydia Yun", email: "yun_ly@auhsd.us", form: "" },
+                { value: "dang_k", name: "Ms. Katy Dang (Dual Enrollment)", email: "dang_k@auhsd.us", form: "" }
+            ],
+            "lexington": [
+                { value: "giem_s", name: "Ms. Stacey Giem", email: "giem_s@auhsd.us", form: "" },
+                { value: "gonzalez_nat", name: "Ms. Natalie Gonzalez", email: "gonzalez_nat@auhsd.us", form: "" }
+            ],
+            "loara": [
+                { value: "manzanares_j", name: "Ms. Jennifer Cervantes-Manzanares", email: "manzanares_j@auhsd.us", form: "https://forms.gle/ptnHxfbFwS9iMobU6" },
+                { value: "chung_h", name: "Ms. Helen Chung", email: "chung_h@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSc24jAMb7q8d4WCdvEvcSZLRxiELBxWQMpLXc-aVwZvRi2KQw/viewform?vc=0&c=0&w=1&flr=0" },
+                { value: "millan_y", name: "Ms. Yesenia Millan", email: "millan_y@auhsd.us", form: "https://forms.gle/GatRZoQiiMkvVrh77" },
+                { value: "palma_e", name: "Mr. Eder Palma", email: "palma_e@auhsd.us", form: "https://forms.gle/p3cYVgodYpaYc1pt8" },
+                { value: "taylor_k", name: "Ms. Kendra Taylor", email: "taylor_k@auhsd.us", form: "" },
+                { value: "mendez_an_dual", name: "Ms. Ana Mendez (Dual Enrollment)", email: "mendez_an@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSf5NeNbWzR86qENsnrYHNJc453c9PeUkyhq_4H129OZaO88gg/viewform?usp=preview" }
+            ],
+            "magnolia": [
+                { value: "flores_ca", name: "Ms. Carolina Flores", email: "flores_ca@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSe3VMok32FJf--mqyd710pfoZX-hmRqvZvxd7URxIv3W46w9g/viewform" },
+                { value: "lamb_j", name: "Mr. Jason Lamb", email: "lamb_j@auhsd.us", form: "https://forms.gle/j3GJ7Lk8uhp1rZjr9" },
+                { value: "medina_a", name: "Ms. Angiela Medina", email: "medina_a@auhsd.us", form: "" },
+                { value: "sarvi_n", name: "Ms. Nasreen Sarvi", email: "sarvi_n@auhsd.us", form: "" },
+                { value: "suarez_l", name: "Ms. Lourdes Suarez", email: "suarez_l@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSd1OjPyJgk63-vFuXtowVJH0feBsO855ZOXCOm2OVwpizmBvA/viewform" },
+                { value: "orozco_cat_dual", name: "Ms. Catalina Orozco (Dual Enrollment)", email: "orozco_cat@auhsd.us", form: "" },
+                { value: "bennett_v", name: "Ms. Vaishali Bennett (ILC)", email: "bennett_v@auhsd.us", form: "" }
+            ],
+            "oxford": [
+                { value: "genovese_a", name: "Ms. Andrea Genovese (Dual Enrollment)", email: "genovese_a@auhsd.us", form: "" },
+                { value: "han_r", name: "Ms. Rachel Han", email: "han_r@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLScrOhheI49jMWHjfFOu4CEMFPtjfuOwdh6dDBQss1LjyCMVhA/closedform" },
+                { value: "mellgren_v", name: "Ms. Victoria Mellgren", email: "mellgren_v@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLScrOhheI49jMWHjfFOu4CEMFPtjfuOwdh6dDBQss1LjyCMVhA/closedform" },
+                { value: "parker_v", name: "Mr. Van Parker", email: "parker_v@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLScrOhheI49jMWHjfFOu4CEMFPtjfuOwdh6dDBQss1LjyCMVhA/closedform" }
+            ],
+            "savanna": [
+                { value: "alvarez_v", name: "Ms. Veronica Alvarez", email: "alvarez_v@auhsd.us", form: "bit.ly/shs_alvarez" },
+                { value: "cardoza_r", name: "Ms. Rosie Cardoza", email: "cardoza_r@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfyHJWO5K_Ccv1csBJKq0Obph5MC1Qr6aHkTTX-ex79QkTu3w/viewform" },
+                { value: "marchantbouska_b", name: "Ms. Brittany Marchant-Bouska", email: "MarchantBouska_B@auhsd.us", form: "" },
+                { value: "mata_m", name: "Ms. Martha Mata", email: "mata_m@auhsd.us", form: "" },
+                { value: "preciado_br", name: "Ms. Brenda Preciado", email: "preciado_br@auhsd.us", form: "https://forms.gle/83fJh8bdSbDq6B1j7" },
+                { value: "mostafa_fa", name: "Ms. Fariha Mostafa", email: "mostafa_fa@auhsd.us", form: "" },
+                { value: "dang_k", name: "Ms. Katy Dang (Dual Enrollment)", email: "dang_k@auhsd.us", form: "" },
+                { value: "kretz_c", name: "Mr. Cory Kretz (ILC)", email: "kretz_c@auhsd.us", form: "" }
+            ],
+            "south": [
+                { value: "dion_c", name: "Ms. Candace Dion", email: "dion_c@auhsd.us", form: "" },
+                { value: "guzman_c", name: "Ms. Cindy Guzman", email: "guzman_c@auhsd.us", form: "" }
+            ],
+            "sycamore": [
+                { value: "morales_ma", name: "Mr. Mario Morales", email: "morales_ma@auhsd.us", form: "https://forms.gle/CvwkMhL2VxNezQzh6" },
+                { value: "soberanis_r", name: "Ms. Robertha Soberanis", email: "soberanis_r@auhsd.us", form: "" }
+            ],
+            "walker": [
+                { value: "pefley_m", name: "Ms. MacKenna Pefley", email: "pefley_m@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfilYFVs8Vuz3AmtHfvkvj7kQZPZx9m2HyFrjk48qPBjiYfiA/viewform?usp=header" },
+                { value: "winn_j", name: "Ms. Jaime Winn", email: "winn_j@auhsd.us", form: "https://docs.google.com/forms/d/e/1FAIpQLSfilYFVs8Vuz3AmtHfvkvj7kQZPZx9m2HyFrjk48qPBjiYfiA/viewform?usp=header" }
+            ],
+            "western": [
+                { value: "field_h", name: "Ms. Heather Field", email: "field_h@auhsd.us", form: "https://forms.gle/ufnacGH4G9zgu1Nw6" },
+                { value: "frembling_j", name: "Ms. Jennifer Frembling", email: "frembling_j@auhsd.us", form: "https://forms.gle/LuK6EQ8MS7NfoRfr5" },
+                { value: "kuramoto_d", name: "Ms. Diane Kuramoto", email: "kuramoto_d@auhsd.us", form: "https://forms.gle/u71kwL1vL43Tt6Go8" },
+                { value: "pineda_m", name: "Ms. Monica Pineda", email: "pineda_m@auhsd.us", form: "https://forms.gle/n9VpgSQTJs9y79Wx7" },
+                { value: "valencia_ma", name: "Ms. Maria Valencia", email: "valencia_ma@auhsd.us", form: "https://forms.gle/o8DvYsRMLovshiPr6" },
+                { value: "yasin_hu", name: "Mr. Husein Yasin", email: "yasin_hu@auhsd.us", form: "https://forms.gle/sdNWBBVhiBYiRyus6" },
+                { value: "genovese_a", name: "Ms. Andrea Genovese (Dual Enrollment)", email: "genovese_a@auhsd.us", form: "" },
+                { value: "oshima_a", name: "Ms. Amy Oshima (Western HS ILC)", email: "oshima_a@auhsd.us", form: "" }
+            ]
+        };
+
+        const schoolSelect = document.getElementById('school');
+        const counselorSelect = document.getElementById('counselor');
+        const form = document.getElementById('counselorForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Handle school selection
+        schoolSelect.addEventListener('change', function() {
+            const selectedSchool = this.value;
+            counselorSelect.innerHTML = '<option value="">Choose your counselor...</option>';
+            
+            if (selectedSchool && counselorData[selectedSchool]) {
+                counselorSelect.disabled = false;
+                counselorData[selectedSchool].forEach(counselor => {
+                    const option = document.createElement('option');
+                    option.value = counselor.value;
+                    option.textContent = counselor.name;
+                    counselorSelect.appendChild(option);
+                });
+            } else {
+                counselorSelect.disabled = true;
+                counselorSelect.innerHTML = '<option value="">First select your school...</option>';
+            }
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const school = schoolSelect.value;
+            const counselor = counselorSelect.value;
+            
+            if (!school || !counselor) {
+                alert('Please select both your school and counselor.');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Connecting... <span class="loading"></span>';
+            submitBtn.disabled = true;
+
+            // Simulate the redirect (replace with actual redirect logic)
+            setTimeout(() => {
+                const selectedCounselorData = counselorData[school].find(c => c.value === counselor);
+                
+                if (selectedCounselorData && selectedCounselorData.form && selectedCounselorData.form.trim() !== "") {
+                    // Redirect to the counselor's specific Google Form
+                    window.location.href = selectedCounselorData.form;
+                } else {
+                    // Fallback - could redirect to a general contact page or show message
+                    alert(`Contact information for ${counselorSelect.options[counselorSelect.selectedIndex].text}:\nEmail: ${selectedCounselorData.email}`);
+                }
+                
+                // Reset button
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Contact Counselor';
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            dropdown.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Logo fallback if image doesn't load
+        document.getElementById('logo').addEventListener('error', function() {
+            this.style.display = 'none';
+            const fallbackLogo = document.createElement('div');
+            fallbackLogo.innerHTML = '<i class="fas fa-graduation-cap" style="font-size: 4rem; color: #667eea;"></i>';
+            fallbackLogo.style.padding = '20px';
+            this.parentElement.appendChild(fallbackLogo);
+        });
+    </script>
+</body>
+</html>
